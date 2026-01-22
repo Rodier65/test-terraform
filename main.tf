@@ -10,13 +10,15 @@ terraform {
 provider "local" {}
 
 resource "local_file" "create_directory" {
-  filename = "${path.module}/my-directory/.gitkeep"
+  filename = "${path.module}/${var.folder}/.gitkeep"
   content = ""
-  directory_permission = var.directory_permission
+  directory_permission = var.directory_permission  
 }
 
 resource "local_file" "create_file" {
-  filename = "${path.module}/my-directory/${var.filename}"
-  content  = var.content
-  file_permission = "0644"
+  filename = "${path.module}/${var.folder}/${var.filename}"
+  content  = var.filecontent
+  file_permission = var.file_permission
+
+depends_on = [ local_file.create_directory ]
 }
